@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { IEventFeatures, IFeature, IFeatureCollection } from '../types/FeatureType';
+import { IFeature,IEventFeatures2 } from '../types/eventes';
 
 // export interface IEventFeatures {
 //   type: string;
@@ -44,7 +44,7 @@ const FeatureSchema = new mongoose.Schema<IFeature>({
       },
       description: {
         type: String,
-        required: true,
+        // required: true,
       },
       typeStyle: {
         type: String,
@@ -53,7 +53,7 @@ const FeatureSchema = new mongoose.Schema<IFeature>({
     },
   });
   
-  const FeatureCollectionSchema = new mongoose.Schema<IFeatureCollection>({
+  const FeatureCollectionSchema = new mongoose.Schema<IEventFeatures2>({
     type: {
       type: String,
       enum: ['FeatureCollection'],
@@ -67,10 +67,14 @@ const FeatureSchema = new mongoose.Schema<IFeature>({
       type: String,
       required: true,
     },
+    date:{
+      type: String,
+      required: true,
+    },
     features: {
       type: [FeatureSchema],
       required: true,
     },
   });
 
-export const EventsFeaturesModel = mongoose.model<IFeatureCollection>('fulleventfeatures', FeatureCollectionSchema);
+export const EventsFeaturesModel = mongoose.model<IEventFeatures2>('fulleventfeatures', FeatureCollectionSchema);

@@ -18,6 +18,7 @@ export interface IFeatureCollection {
   type: 'FeatureCollection';
   id?: number;
   label?: string;
+  date?: string,
   features: IFeature[];
 }
 
@@ -36,12 +37,13 @@ export interface FeaturesState extends Document{
 
   
   export interface IEventFeatures extends Document{
-    _doc: any;
+    _doc?: any;
 
     features: IFeatures[]
     type: string,
     id: number,
     label: string
+    date: string
   }
 
  

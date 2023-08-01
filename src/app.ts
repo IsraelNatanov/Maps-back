@@ -3,7 +3,9 @@ import dotenv from "dotenv";
 import "./db/mongoConnect";
 import pointFeaturesR from "./routes/pointFeatures";
 import eventesFeaturesR from "./routes/eventesFeatures";
+// import eventsR from "./routes/eventes";
 import polygonFeaturesR, { attachSocketIO } from "./routes/polygonFeatures";
+import eventsR, { attachSocketIOEvents } from "./routes/eventes";
 import bodyParser from "body-parser";
 import apiRoutes from './routes/apiRoutes';
 import { createServer } from "http";
@@ -24,6 +26,7 @@ const io = new Server(httpServer, {
   },
 });
 const polygonFeaturesRouter = attachSocketIO(io);
+const eventsFeaturesRouter = attachSocketIOEvents(io);
 
 app.use(bodyParser.json());
 app.use(express.json());
@@ -48,6 +51,7 @@ app.use("/pointFeatres", pointFeaturesR);
 app.use("/eventesFeatures", eventesFeaturesR);
 app.use("/polygonFeatures", polygonFeaturesRouter);
 app.use('/api', apiRoutes);
+app.use('/events',eventsFeaturesRouter)
 
 const PORT = process.env.PORT || 5000;
 
