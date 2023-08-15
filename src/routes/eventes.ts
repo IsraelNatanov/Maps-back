@@ -5,6 +5,7 @@ import { IEventFeatures, IFeatures } from "../types/FeatureType";
 import { IEventFeatures2, IFeature} from "../types/eventes";
 import { Server, Socket } from "socket.io";
 import { featuresSetting } from "../util/settingEvents";
+import { formatDistance, haversineDistance} from '../util/distanceCalculation'
 
 
 const router = express.Router();
@@ -88,9 +89,13 @@ router.post("/", async (req: Request, res: Response) => {
               let index = i + 1
           featuresSetting[index].geometry.coordinates[0] = lowestCoordinates
           featuresSetting[index].geometry.coordinates[1] = geoJson.coordinates
-          console.log('lowestCoordinates',lowestCoordinates);
-          console.log('geometry',  featuresSetting[index].geometry.coordinates);
+          console.log('lowestCoordinates', lowestCoordinates);
+          console.log('geoJson.coordinates', geoJson.coordinates);
           
+          
+          const distanceInMeters = haversineDistance(lowestCoordinates, geoJson.coordinates);
+          const formattedDistance = formatDistance(distanceInMeters);
+          featuresSetting[index].properties.name = formattedDistance
           
         }
       
